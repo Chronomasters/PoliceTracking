@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "735476752787",
+    "firebase_url": "https://police-tracking.firebaseio.com",
+    "project_id": "police-tracking",
+    "storage_bucket": "police-tracking.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:735476752787:android:a3335d8e6fed15a4",
+        "android_client_info": {
+          "package_name": "joseph.com.policetracking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "735476752787-b41889n4sid2c48na1uh1qs93c8afku9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSc-mTFkukKNmeapHiX1hoHw5bSgKvDo4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
