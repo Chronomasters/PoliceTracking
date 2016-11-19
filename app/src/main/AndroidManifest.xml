@@ -19,6 +19,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Dispatch" />
+        <activity android:name=".Police" />
+        <activity android:name=".Ambulance" />
+        <activity android:name=".Firemen" />
+        <activity android:name=".Create" />
+        <activity android:name=".DispatchW"></activity>
     </application>
 
 </manifest>
