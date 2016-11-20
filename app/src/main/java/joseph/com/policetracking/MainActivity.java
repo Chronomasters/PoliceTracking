@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private DatabaseReference databaseReference;
 
-public class MainActivity extends AppCompatActivity {
     Context context = this;
 
     @Override
