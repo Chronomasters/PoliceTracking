@@ -13,9 +13,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import static joseph.com.policetracking.MainActivity.aFlag;
 import static joseph.com.policetracking.MainActivity.dFlag;
+import static joseph.com.policetracking.MainActivity.databaseReference;
 import static joseph.com.policetracking.MainActivity.fFlag;
 import static joseph.com.policetracking.MainActivity.mAuth;
 import static joseph.com.policetracking.MainActivity.pFlag;
@@ -27,6 +29,7 @@ public class Dispatch extends AppCompatActivity implements View.OnClickListener 
     private Button login;
     private TextView create;
 
+    public static String email2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +50,17 @@ public class Dispatch extends AppCompatActivity implements View.OnClickListener 
 
         login.setOnClickListener(this);
         create.setOnClickListener(this);
+
+        onTokenRefresh();
+
+
+
+    }
+
+    public void onTokenRefresh() {
+        // Get updated InstanceID token.
+        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+        System.out.println(refreshedToken);
 
     }
 
@@ -110,7 +124,40 @@ public class Dispatch extends AppCompatActivity implements View.OnClickListener 
                         }
                     }
                 });
+        String child = "";
+        if(pFlag == 1) {
+            child = "Police";
+        }
+
+        else if (aFlag == 1) {
+            child = "Ambulance";
+        }
+
+        else if (fFlag == 1) {
+            child = "Firemen";
+        }
+        System.out.println(aFlag);
+        System.out.println(pFlag);
+        System.out.println(fFlag);
+
+        String coords = LocationTracker.currentLocationCoordinates[0] + "," + LocationTracker.currentLocationCoordinates[1];
+
+
+        /*DatabaseReference x = databaseReference.push();
+        String y = x.toString();
+        y = y.replaceFirst("https://police-tracking.firebaseio.com/", "");
+        System.out.println(y);*/
+        System.out.println(email);
+        email2 = email.substring(0, email.indexOf("@"));
+        System.out.println(email2);
+        databaseReference.child(child).child(email2).setValue(coords);
+       // System.out.println(databaseReference.child(child).getKey());
+
+
+
     }
+
+
 
 }
 

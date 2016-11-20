@@ -41,9 +41,10 @@ public class LocationTracker {
         LocationManager locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
 
         Location lastKnownLocation = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
-        double lastknownLocationArray[] = {lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude()};
+        double lastknownLocationArray[] = {
+                lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude()};
         currentLocationCoordinates = lastknownLocationArray;
-  //      System.out.println("last known location: " + currentLocationCoordinates[0] + "," + currentLocationCoordinates[1]);
+       System.out.println("last known location: " + currentLocationCoordinates[0] + "," + currentLocationCoordinates[1]);
 
         LocationListener locationListener = new LocationListener() {
             @Override
@@ -51,7 +52,7 @@ public class LocationTracker {
                 double coord[] = {location.getLatitude(), location.getLongitude()};
 
                 currentLocationCoordinates = coord;
-    //            System.out.println("current location: " + currentLocationCoordinates[0] + "," + currentLocationCoordinates[1]);
+                System.out.println("current location: " + currentLocationCoordinates[0] + "," + currentLocationCoordinates[1]);
 
             }
 
