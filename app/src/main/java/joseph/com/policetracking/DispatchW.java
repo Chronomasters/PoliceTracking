@@ -118,5 +118,17 @@ public class DispatchW extends AppCompatActivity implements View.OnClickListener
         }
     }
 
+    public ArrayList<Officer> makeOfficerList(ArrayList<String>officerNames, ArrayList<Double[]> officerLocations) {
+        ArrayList<Officer> result = new ArrayList<>();
+
+        for (int i = 0; i < officerNames.size(); i++){
+            result.add(new Officer(officerNames.get(i), officerLocations.get(i)));
+        }
+
+        return result;
+    }
+
+
+
 
 }
