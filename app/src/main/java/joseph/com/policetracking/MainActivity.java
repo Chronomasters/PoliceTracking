@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     public static DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+    public static DatabaseReference alertReference = databaseReference.child("Alerts");
+    public static DatabaseReference policeReference = databaseReference.child("Police");
 
     Context context = this;
 

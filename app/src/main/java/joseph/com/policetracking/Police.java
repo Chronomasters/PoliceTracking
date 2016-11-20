@@ -15,13 +15,12 @@ import android.widget.RemoteViews;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 
 import static joseph.com.policetracking.Dispatch.email2;
-import static joseph.com.policetracking.MainActivity.databaseReference;
+import static joseph.com.policetracking.MainActivity.alertReference;
 
 public class Police extends AppCompatActivity {
-    public static DatabaseReference alertReference = databaseReference.child("Alerts");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,24 +50,21 @@ public class Police extends AppCompatActivity {
                     mBuilder.setContentTitle("Notification Alert, Click Me!");
                     mBuilder.setContentText("Hi, This is Android Notification Detail!");
 
+
                     Intent resultIntent = new Intent(getApplicationContext(), Police.class);
                     TaskStackBuilder stackBuilder = TaskStackBuilder.create(getApplicationContext());
                     stackBuilder.addParentStack(Police.class);
                     stackBuilder.addNextIntent(resultIntent);
                     PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
                     mBuilder.setContentIntent(resultPendingIntent);
-
-
+                    //mNotificationManager.cancel(9);
 
                     mBuilder.addAction(R.mipmap.ic_launcher, "Accept", resultPendingIntent);
                     mBuilder.addAction(R.mipmap.ic_launcher, "Decline", resultPendingIntent);
 
+
                     NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                     mNotificationManager.notify(9, mBuilder.build());
-
-
-
-
 
                 }
             }
