@@ -48,10 +48,14 @@ public class OfficerTracker {
         ArrayList<String>officerIDs = new ArrayList<>();
         ArrayList<Double>officersDistanceAway = new ArrayList<>();
 
+        int j = 0;
+
         for (Officer officer : officerList) {   //for every officer
-            double distanceFromCaller = getDistanceBetween(officer.location, callerLocation); //calculate distance from caller
-            officerIDs.add(officer.ID);
-            officersDistanceAway.add(distanceFromCaller);
+            if (j < 15) {
+                double distanceFromCaller = getDistanceBetween(officer.location, callerLocation); //calculate distance from caller
+                officerIDs.add(officer.ID);
+                officersDistanceAway.add(distanceFromCaller);
+            }
         }
 
         //TESTING PURPOSES: PLEASE DELETE AFTERWaRDS
