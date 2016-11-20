@@ -11,22 +11,49 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.RemoteViews;
+import android.widget.TextView;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 import static joseph.com.policetracking.Dispatch.email2;
 import static joseph.com.policetracking.DispatchW.address;
 import static joseph.com.policetracking.MainActivity.alertReference;
+import static joseph.com.policetracking.MainActivity.databaseReference;
 
 public class Police extends AppCompatActivity {
+
+    TextView addressTextView;
+    String y = "";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_police);
+
+
+        addressTextView = (TextView)findViewById(R.id.addressText);
+        databaseReference.child("Address").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        })
+            }
+
+
+
+        addressTextView.setText("Address: " + y);
 
         createNotification();
     }
@@ -44,34 +71,39 @@ public class Police extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                if (email2.equals("officer1") ) {
 
-                    NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext());
-                    mBuilder.setSmallIcon(R.mipmap.ic_launcher);
-                    mBuilder.setContentTitle("Hey, there's an accident. Can you make it?");
-                    mBuilder.setContentText(address);
+                ArrayList<String> officersToNotify = DispatchW.closestOfficers;
 
+      //          for (String officerName : officersToNotify){
 
-                    Intent resultIntent = new Intent(getApplicationContext(), Police.class);
-                    TaskStackBuilder stackBuilder = TaskStackBuilder.create(getApplicationContext());
-                    stackBuilder.addParentStack(Police.class);
-                    stackBuilder.addNextIntent(resultIntent);
-                    PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
-                    mBuilder.setContentIntent(resultPendingIntent);
-                    //mNotificationManager.cancel(9);
+                    System.out.println("before if, in createNotification");
+                  //  if (email2.toLowerCase().equals(officerName.toLowerCase())) {
+                        System.out.println("after if, in createNotification");
+
+                        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext());
+                        mBuilder.setSmallIcon(R.mipmap.ic_launcher);
+                        mBuilder.setContentTitle("Hey, there's an emergency");
+                        mBuilder.setContentText("Can you make it?");
 
 
+                        Intent resultIntent = new Intent(getApplicationContext(), Police.class);
+                        TaskStackBuilder stackBuilder = TaskStackBuilder.create(getApplicationContext());
+                        stackBuilder.addParentStack(Police.class);
+                        stackBuilder.addNextIntent(resultIntent);
 
-                    mBuilder.addAction(R.mipmap.ic_launcher, "Accept", resultPendingIntent);
-                    mBuilder.addAction(R.mipmap.ic_launcher, "Decline", resultPendingIntent);
+                        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+                        mBuilder.setContentIntent(resultPendingIntent);
+                        //mNotificationManager.cancel(9);
 
 
+                        mBuilder.addAction(R.mipmap.ic_launcher, "Accept", resultPendingIntent);
+                        mBuilder.addAction(R.mipmap.ic_launcher, "Decline", resultPendingIntent);
 
 
-                    NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                    mNotificationManager.notify(9, mBuilder.build());
-
-                }
+                        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                        mNotificationManager.notify(9, mBuilder.build());
+               //     }
+               // }
             }
 
             @Override

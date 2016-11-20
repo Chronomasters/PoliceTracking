@@ -9,7 +9,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.concurrent.ExecutionException;
 
 import okhttp3.OkHttpClient;
@@ -48,6 +50,8 @@ public class GoogleMatrixRequest {
     }
 
     public String makeRequestUrl(Double officerCoords[], Double callerCoords[]) {
+
+        System.out.println("Officer coords = " + officerCoords[0] + "," + officerCoords[1]);
         String origin=officerCoords[0] + "," + officerCoords[1];
         String destination = callerCoords[0] + "," + callerCoords[1];
 
@@ -86,7 +90,7 @@ public class GoogleMatrixRequest {
 
     private class GetResponseTask extends AsyncTask<String, String, String> {
 
-        ProgressDialog progressDialog;
+      //  ProgressDialog progressDialog;
 
         protected String doInBackground(String... strings){
             System.out.println("strings[0] = " + strings[0]);
@@ -97,7 +101,7 @@ public class GoogleMatrixRequest {
 
         protected void onPostExecute(String response){
 //            System.out.println("onPostExecute: response=" + response);
-            int durationFromJSON = 0;
+         /*   int durationFromJSON = 0;
             try {
                durationFromJSON  = getDurationFromJSON(response);
             } catch (JSONException e) {
@@ -109,7 +113,8 @@ public class GoogleMatrixRequest {
             finalTravelDuration = durationFromJSON;
             readyToReturn = true;
 
-            progressDialog.cancel();
+*/
+       //     progressDialog.cancel();
 
 
 
@@ -117,11 +122,11 @@ public class GoogleMatrixRequest {
 
         @Override
         protected void onPreExecute() {
-
+/*
             progressDialog = new ProgressDialog((Activity) mContext);
             progressDialog.setMessage("Searching for units...");
             progressDialog.setCancelable(false);
-            progressDialog.show();
+            progressDialog.show();*/
 
         }
 
@@ -137,6 +142,8 @@ public class GoogleMatrixRequest {
 
         try {
             String result = new GetResponseTask().execute(url, url, url).get();
+            System.out.println("getRouteDuration:");
+       //     System.out.println(result);
 
             int durationFromJSON = 0;
             try {
@@ -156,6 +163,51 @@ public class GoogleMatrixRequest {
 
         return finalTravelDuration;
     }
+
+    public Double[] getCoordsFromAddress (String address) throws UnsupportedEncodingException {
+
+        String addressquery = URLEncoder.encode(address, "utf-8");
+        String url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + addressquery + "&key=AIzaSyCSc-mTFkukKNmeapHiX1hoHw5bSgKvDo4";
+
+
+        double latDouble = 0.0;
+        double lngDouble = 0.0;
+
+        try {
+            String result = new GetResponseTask().execute(url, url, url).get();
+
+            System.out.println(result);
+
+            JSONObject obj = new JSONObject(result);
+
+
+//String number = obj.getJSONArray("rows").getJSONObject(0).getJSONArray("elements").getJSONObject(0).getJSONObject("duration").get("value").toString();
+
+
+            String lala = obj.getJSONArray("results").getJSONObject(0).toString();
+            String lat = lala.substring(lala.indexOf("\"lat\":")+6, lala.indexOf("\"lat\":") + 15);
+            String lng = lala.substring(lala.indexOf("\"lng\":")+6, lala.indexOf("\"lng\":") + 15);
+
+            latDouble = Double.parseDouble(lat);
+            lngDouble = Double.parseDouble(lng);
+
+
+      //      System.out.println("testing json maps: " + lat + "," + lng);
+
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Double[] finalCoords = {latDouble, lngDouble};
+
+        return finalCoords;
+    }
+
 
 
 }
