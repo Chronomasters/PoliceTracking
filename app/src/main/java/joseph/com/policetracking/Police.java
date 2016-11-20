@@ -17,6 +17,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 
 import static joseph.com.policetracking.Dispatch.email2;
+import static joseph.com.policetracking.DispatchW.address;
 import static joseph.com.policetracking.MainActivity.alertReference;
 
 public class Police extends AppCompatActivity {
@@ -47,8 +48,8 @@ public class Police extends AppCompatActivity {
 
                     NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext());
                     mBuilder.setSmallIcon(R.mipmap.ic_launcher);
-                    mBuilder.setContentTitle("Notification Alert, Click Me!");
-                    mBuilder.setContentText("Hi, This is Android Notification Detail!");
+                    mBuilder.setContentTitle("Hey, there's an accident. Can you make it?");
+                    mBuilder.setContentText(address);
 
 
                     Intent resultIntent = new Intent(getApplicationContext(), Police.class);
@@ -59,8 +60,12 @@ public class Police extends AppCompatActivity {
                     mBuilder.setContentIntent(resultPendingIntent);
                     //mNotificationManager.cancel(9);
 
+
+
                     mBuilder.addAction(R.mipmap.ic_launcher, "Accept", resultPendingIntent);
                     mBuilder.addAction(R.mipmap.ic_launcher, "Decline", resultPendingIntent);
+
+
 
 
                     NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

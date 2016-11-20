@@ -20,7 +20,7 @@ public class DispatchW extends AppCompatActivity implements View.OnClickListener
     private Button ambulance;
     private Button firemen;
 
-    private String address;
+    public static String address;
     private EditText inputAddress;
 
 
@@ -62,6 +62,7 @@ public class DispatchW extends AppCompatActivity implements View.OnClickListener
                 policeReference.addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        System.out.println("It is running:" + dataSnapshot.getKey());
                         long x = dataSnapshot.getChildrenCount();
                         //System.out.println(dataSnapshot.getKey() + " " + dataSnapshot.getValue());
 
