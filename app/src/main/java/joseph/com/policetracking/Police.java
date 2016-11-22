@@ -20,8 +20,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import static joseph.com.policetracking.Dispatch.email2;
-import static joseph.com.policetracking.DispatchW.address;
 import static joseph.com.policetracking.MainActivity.alertReference;
 import static joseph.com.policetracking.MainActivity.databaseReference;
 
@@ -48,8 +46,8 @@ public class Police extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        })
-            }
+        });
+
 
 
 
@@ -57,6 +55,7 @@ public class Police extends AppCompatActivity {
 
         createNotification();
     }
+
 
 
     private NotificationCompat.Builder builder;
